@@ -118,4 +118,4 @@ http://localhost:5173
 
 ## Author
 
-Full-stack development portfolio project.
+Wai Lin Phyo
