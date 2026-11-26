@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { useCurrency } from '../context/CurrencyContext';
+import { useAuth } from '../context/AuthContext';
 
 function Settings() {
 
     const { setCurrency } = useCurrency();
+    const { logout } = useAuth();
 
     const [profile, setProfile] = useState(() => {
         const savedProfile = localStorage.getItem('expenseTrackerProfile');
@@ -132,13 +134,18 @@ function Settings() {
     };
 
     // Logout
-    const handleLogout = () => {
+    const handleLogout = async () => {
         const confirmed = window.confirm(
             'Are you sure you want to log out?'
         );
 
-        if (confirmed) {
-            alert('Logout functionality will be implemented later.');
+        if (!confirmed) return;
+
+        try {
+            await logout();
+        } catch (error) {
+            console.error('Logout failed:', error);
+            alert('Unable to log out. Please try again.');
         }
     };
 
